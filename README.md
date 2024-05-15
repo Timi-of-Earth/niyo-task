@@ -33,6 +33,13 @@ $ npm install
 ```
 
 ## Running the app
+Prerequisite: Set up a Postgres server locally with the following credentials
+ ```json
+ {
+  "username": "postgres",
+  "password": "postgres",
+  "database": "task-management",
+ }
 
 ```bash
 # development
@@ -45,18 +52,133 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+Alternatively, if you have Docker Installed, you can run Docker compose up
+App runs on port 4000
 
-```bash
-# unit tests
-$ npm run test
+# Auth API Documentation
 
-# e2e tests
-$ npm run test:e2e
+This document provides information about the authentication API endpoints.
 
-# test coverage
-$ npm run test:cov
-```
+## Signing Up
+
+- **Endpoint:** `POST /auth/signup`
+- **Description:** This endpoint allows users to sign up by providing a username and a strong password.
+- **Request Body:**
+  ```json
+  {
+    "username": "string (4-16 characters)",
+    "password": "string (8-32 characters, at least one uppercase letter, one lowercase letter, one number or special character)"
+  }
+
+- **Response:**
+- **Status:** `201 Created`
+- **Body:** `None`
+
+## Signing In
+
+- **Endpoint:** `POST /auth/signin`
+- **Description:** This endpoint allows users to sign in by providing their credentials (Username and password)
+- **Request Body:**
+  ```json
+  {
+    "username": "string",
+    "password": "string"
+  }
+
+- **Response:**
+- **Status:** `201 OK`
+- **Body:**
+  ```json
+  {
+    "accessToken": "string"
+  }
+
+## Get Tasks
+
+- **Endpoint:** `GET /tasks`
+- **Description:** This endpoint retrieves tasks based on optional filtering criteria.
+- **Query Parameters:**
+  - `status` (optional): Task status (`'OPEN'`, `'IN_PROGRESS'`, `'DONE'`)
+  - `search` (optional): Search query string
+- **Request Header:** JWT token for user authentication
+- **Response:**
+  - **Status:** 200 OK
+  - **Body:** Array of tasks
+
+## Create Task
+
+- **Endpoint:** `POST /tasks`
+- **Description:** This endpoint creates a new task.
+- **Request Body:**
+  ```json
+  {
+    "title": "string (required)",
+    "description": "string (required)"
+  }
+- **Response:**
+- **Status:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "id": "string",
+    "title": "string",
+    "description": "string",
+    "status": "string",
+    "user": "User Object"
+  }
+
+## Get Single Task
+
+- **Endpoint:** `POST /tasks/:id`
+- **Description:** This endpoint retrieves a single task by ID.
+- **Path Parameter:**
+  - `id` (required): Task id (string)
+- **Request Body:** `None`
+- **Response:**
+- **Status:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "id": "string",
+    "title": "string",
+    "description": "string",
+    "status": "string",
+    "user": "User Object"
+  }
+
+## Delete Single Task
+
+- **Endpoint:** `DELETE /tasks/:id`
+- **Description:** This endpoint deletes a single task by ID.
+- **Path Parameter:**
+  - `id` (required): Task id (string)
+- **Request Body:** `None`
+- **Response:**
+- **Status:** `200 OK`
+- **Body:** `Array of remaining tasks`
+
+## Update Task Status
+
+- **Endpoint:** `PATCH /tasks/:id/status`
+- **Description:** This endpoint updates the status of a single task by ID. 
+- **Path Parameter:**
+  - `id` (required): Task id (string)
+- **Request Body:**
+  ```json
+  {
+    "status": "string (required, 'OPEN', 'IN_PROGRESS', 'DONE')"
+  }
+- **Response:**
+- **Status:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "id": "string",
+    "title": "string",
+    "description": "string",
+    "status": "string",
+    "user": "User Object"
+  }
 
 ## Support
 
