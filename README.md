@@ -40,6 +40,7 @@ Prerequisite: Set up a Postgres server locally with the following credentials
   "password": "postgres",
   "database": "task-management",
  }
+ ```
 
 ```bash
 # development
