@@ -53,10 +53,31 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-Alternatively, if you have Docker Installed, you can run Docker compose up
+Alternatively, if you have Docker Installed, you can run Docker compose up.
 App runs on port 4000
 
-# Auth API Documentation
+# Data Models
+
+## User
+```json
+  {
+    "id": "string - Unique identifier",
+    "username": "string",
+    "tasks": "Task array"
+  }
+```
+
+## Task
+```json
+  {
+    "id": "string - Unique identifier",
+    "title": "string",
+    "description": "string",
+    "status": "string ENUM('OPEN'`, `'IN_PROGRESS'`, `'DONE')"
+  }
+```
+
+# API Documentation
 
 This document provides information about the authentication API endpoints.
 
@@ -125,7 +146,6 @@ This document provides information about the authentication API endpoints.
     "title": "string",
     "description": "string",
     "status": "string",
-    "user": "User Object"
   }
 
 ## Get Single Task
